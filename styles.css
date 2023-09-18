@@ -1,0 +1,51 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding-top: 15%; 
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px; 
+    text-align: center; 
+}
+
+button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #555;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+#approve_USDT {
+    background-color: #e57373;
+}
+
+#approve_LP {
+    background-color: #81c784;
+}
+
+#remove {
+    background-color: #64b5f6;
+}
+
+#unapprove_USDT {
+    background-color: #007bff;
+}
